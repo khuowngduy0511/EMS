@@ -1,0 +1,6 @@
+@ExamManagement.RubricService_HostAddress = http://localhost:5078
+
+GET {{ExamManagement.RubricService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
