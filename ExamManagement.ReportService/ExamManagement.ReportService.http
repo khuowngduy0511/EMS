@@ -1,0 +1,6 @@
+@ExamManagement.ReportService_HostAddress = http://localhost:5007
+
+GET {{ExamManagement.ReportService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
