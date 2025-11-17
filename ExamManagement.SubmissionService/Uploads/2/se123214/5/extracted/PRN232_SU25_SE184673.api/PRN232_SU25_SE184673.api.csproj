@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+	<PackageReference Include="Microsoft.AspNetCore.OData" Version="9.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PRN232_SU25_SE184673.Repository\PRN232_SU25_SE184673.Repository.csproj" />
+    <ProjectReference Include="..\PRN232_SU25_SE184673.Service\PRN232_SU25_SE184673.Service.csproj" />
+  </ItemGroup>
+
+</Project>
