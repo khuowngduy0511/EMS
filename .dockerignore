@@ -1,0 +1,62 @@
+# Build artifacts
+**/bin/
+**/obj/
+**/out/
+
+# Visual Studio
+**/.vs/
+**/.vscode/
+**/*.user
+**/*.suo
+**/*.userosscache
+**/*.sln.docstates
+
+# User-specific files
+**/.idea/
+**/*.iml
+
+# Test results
+**/TestResults/
+**/[Tt]est[Rr]esult*/
+**/*.trx
+
+# NuGet packages
+**/packages/
+**/*.nupkg
+**/*.snupkg
+
+# Uploads directory (contains user submissions)
+**/Uploads/
+
+# Git
+**/.git/
+**/.gitignore
+**/.gitattributes
+
+# Docker
+**/Dockerfile*
+**/docker-compose*.yml
+**/.dockerignore
+
+# Documentation
+**/*.md
+**/README*
+**/LICENSE*
+
+# Logs
+**/*.log
+**/logs/
+
+# Environment files
+**/.env
+**/.env.local
+**/.env.*.local
+
+# OS files
+**/.DS_Store
+**/Thumbs.db
+
+# IDE
+**/.idea/
+**/.vs/
+**/.vscode/

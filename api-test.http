@@ -1,0 +1,278 @@
+### API Gateway Test File
+### Base URL
+@baseUrl = http://localhost:8000
+@baseUrlHttps = https://localhost:8001
+@token = 
+
+### ============================================
+### 1. AUTH API
+### ============================================
+
+### Login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+### Login (examiner)
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "examiner",
+  "password": "examiner123"
+}
+
+### Refresh Token
+POST {{baseUrl}}/api/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "{{token}}"
+}
+
+### Revoke Token
+POST {{baseUrl}}/api/auth/revoke
+Content-Type: application/json
+
+{
+  "refreshToken": "{{token}}"
+}
+
+### ============================================
+### 2. SUBJECTS API
+### ============================================
+
+### Get All Subjects
+GET {{baseUrl}}/api/subjects
+Accept: application/json
+
+### Get Subject by ID
+GET {{baseUrl}}/api/subjects/1
+Accept: application/json
+
+### Create Subject
+POST {{baseUrl}}/api/subjects
+Content-Type: application/json
+
+{
+  "name": "Lập trình C#",
+  "code": "CS101",
+  "description": "Môn học lập trình C# cơ bản"
+}
+
+### Update Subject
+PUT {{baseUrl}}/api/subjects/1
+Content-Type: application/json
+
+{
+  "name": "Lập trình C# Advanced",
+  "code": "CS101",
+  "description": "Môn học lập trình C# nâng cao"
+}
+
+### Delete Subject
+DELETE {{baseUrl}}/api/subjects/1
+Accept: application/json
+
+### ============================================
+### 3. SEMESTERS API
+### ============================================
+
+### Get All Semesters
+GET {{baseUrl}}/api/semesters
+Accept: application/json
+
+### Create Semester
+POST {{baseUrl}}/api/semesters
+Content-Type: application/json
+
+{
+  "name": "Học kỳ 1 - 2024",
+  "startDate": "2024-01-01",
+  "endDate": "2024-06-30"
+}
+
+### ============================================
+### 4. EXAMS API
+### ============================================
+
+### Get All Exams
+GET {{baseUrl}}/api/exams
+Accept: application/json
+
+### Get Exam by ID
+GET {{baseUrl}}/api/exams/1
+Accept: application/json
+
+### Create Exam
+POST {{baseUrl}}/api/exams
+Content-Type: application/json
+
+{
+  "subjectId": 1,
+  "semesterId": 1,
+  "name": "Kiểm tra giữa kỳ",
+  "description": "Bài kiểm tra giữa kỳ môn lập trình",
+  "startDate": "2024-03-01T08:00:00",
+  "endDate": "2024-03-01T10:00:00"
+}
+
+### Update Exam
+PUT {{baseUrl}}/api/exams/1
+Content-Type: application/json
+
+{
+  "subjectId": 1,
+  "semesterId": 1,
+  "name": "Kiểm tra giữa kỳ (Updated)",
+  "description": "Bài kiểm tra giữa kỳ môn lập trình (Updated)",
+  "startDate": "2024-03-01T08:00:00",
+  "endDate": "2024-03-01T10:00:00"
+}
+
+### ============================================
+### 5. RUBRICS API
+### ============================================
+
+### Get Rubric by Exam ID
+GET {{baseUrl}}/api/rubrics/1
+Accept: application/json
+
+### Create Rubric
+POST {{baseUrl}}/api/rubrics/1
+Content-Type: application/json
+
+{
+  "criteria": [
+    {
+      "name": "Code Quality",
+      "description": "Đánh giá chất lượng code",
+      "maxScore": 30
+    },
+    {
+      "name": "Functionality",
+      "description": "Đánh giá chức năng",
+      "maxScore": 40
+    },
+    {
+      "name": "Documentation",
+      "description": "Đánh giá tài liệu",
+      "maxScore": 30
+    }
+  ]
+}
+
+### ============================================
+### 6. EXAMINERS API
+### ============================================
+
+### Get All Examiners
+GET {{baseUrl}}/api/examiners
+Accept: application/json
+
+### Assign Examiner
+POST {{baseUrl}}/api/examiners/assign
+Content-Type: application/json
+
+{
+  "examId": 1,
+  "examinerId": "examiner",
+  "submissionIds": [1, 2, 3]
+}
+
+### ============================================
+### 7. SUBMISSIONS API
+### ============================================
+
+### Upload Submission (multipart/form-data)
+POST {{baseUrl}}/api/submissions/upload
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="examId"
+
+1
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="studentId"
+
+ST001
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="studentName"
+
+Nguyen Van A
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="submission.zip"
+Content-Type: application/zip
+
+< ./test-file.zip
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Get Submission by ID
+GET {{baseUrl}}/api/submissions/1
+Accept: application/json
+
+### Grade Submission
+POST {{baseUrl}}/api/submissions/1/grade
+Content-Type: application/json
+
+{
+  "examinerId": "examiner",
+  "scores": [
+    {
+      "criteriaId": 1,
+      "score": 25,
+      "comment": "Good code quality"
+    },
+    {
+      "criteriaId": 2,
+      "score": 35,
+      "comment": "All functionality works"
+    },
+    {
+      "criteriaId": 3,
+      "score": 28,
+      "comment": "Well documented"
+    }
+  ]
+}
+
+### ============================================
+### 8. VIOLATIONS API
+### ============================================
+
+### Get Violations by Submission ID
+GET {{baseUrl}}/api/violations/1
+Accept: application/json
+
+### Check Violations
+POST {{baseUrl}}/api/violations/check
+Content-Type: application/json
+
+{
+  "submissionId": 1,
+  "examId": 1
+}
+
+### ============================================
+### 9. REPORTS API
+### ============================================
+
+### Get Exam Reports (OData)
+GET {{baseUrl}}/api/reports/exam?examId=1
+Accept: application/json
+
+### Get Exam Reports with OData filters
+GET {{baseUrl}}/api/reports/exam?examId=1&$filter=TotalScore gt 50&$orderby=TotalScore desc
+Accept: application/json
+
+### Export Exam Report (Excel)
+GET {{baseUrl}}/api/reports/exam/export?examId=1
+Accept: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+
+
+
+

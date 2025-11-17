@@ -1,0 +1,321 @@
+services:
+  # SQL Server
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: exammanagement-sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong@Passw0rd
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'YourStrong@Passw0rd' -Q 'SELECT 1' -C || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
+    networks:
+      - exammanagement-network
+
+  # AuthService
+  authservice:
+    build:
+      context: .
+      dockerfile: ExamManagement.AuthService/Dockerfile
+    container_name: exammanagement-authservice
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5001
+      - ConnectionStrings__AuthDB=Server=sqlserver;Database=AuthDB;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;
+    ports:
+      - "5001:5001"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5001/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - exammanagement-network
+    restart: unless-stopped
+
+  # SubjectService
+  subjectservice:
+    build:
+      context: .
+      dockerfile: ExamManagement.SubjectService/Dockerfile
+    container_name: exammanagement-subjectservice
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5004
+      - ConnectionStrings__SubjectDB=Server=sqlserver;Database=SubjectDB;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;
+    ports:
+      - "5004:5004"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5004/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - exammanagement-network
+    restart: unless-stopped
+
+  # SemesterService
+  semesterservice:
+    build:
+      context: .
+      dockerfile: ExamManagement.SemesterService/Dockerfile
+    container_name: exammanagement-semesterservice
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5245
+      - ConnectionStrings__SemesterDB=Server=sqlserver;Database=SemesterDB;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;
+    ports:
+      - "5245:5245"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5245/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - exammanagement-network
+    restart: unless-stopped
+
+  # ExamService
+  examservice:
+    build:
+      context: .
+      dockerfile: ExamManagement.ExamService/Dockerfile
+    container_name: exammanagement-examservice
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5145
+      - ConnectionStrings__ExamDB=Server=sqlserver;Database=ExamDB;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;
+    ports:
+      - "5145:5145"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5145/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - exammanagement-network
+    restart: unless-stopped
+
+  # RubricService
+  rubricservice:
+    build:
+      context: .
+      dockerfile: ExamManagement.RubricService/Dockerfile
+    container_name: exammanagement-rubricservice
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5078
+      - ConnectionStrings__RubricDB=Server=sqlserver;Database=RubricDB;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;
+    ports:
+      - "5078:5078"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5078/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - exammanagement-network
+    restart: unless-stopped
+
+  # ExaminerService
+  examinerservice:
+    build:
+      context: .
+      dockerfile: ExamManagement.ExaminerService/Dockerfile
+    container_name: exammanagement-examinerservice
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5291
+      - ConnectionStrings__ExaminerDB=Server=sqlserver;Database=ExaminerDB;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;
+    ports:
+      - "5291:5291"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      authservice:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5291/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - exammanagement-network
+    restart: unless-stopped
+
+  # SubmissionService
+  submissionservice:
+    build:
+      context: .
+      dockerfile: ExamManagement.SubmissionService/Dockerfile
+    container_name: exammanagement-submissionservice
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5035
+      - ConnectionStrings__SubmissionDB=Server=sqlserver;Database=SubmissionDB;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;
+    ports:
+      - "5035:5035"
+    volumes:
+      - submissions_uploads:/app/Uploads
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5035/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - exammanagement-network
+    restart: unless-stopped
+
+  # ViolationService
+  violationservice:
+    build:
+      context: .
+      dockerfile: ExamManagement.ViolationService/Dockerfile
+    container_name: exammanagement-violationservice
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5005
+      - ConnectionStrings__ViolationDB=Server=sqlserver;Database=ViolationDB;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;
+      - ServiceUrls__SubmissionService=http://submissionservice:5035
+    ports:
+      - "5005:5005"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      submissionservice:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5005/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - exammanagement-network
+    restart: unless-stopped
+
+  # ReportService
+  reportservice:
+    build:
+      context: .
+      dockerfile: ExamManagement.ReportService/Dockerfile
+    container_name: exammanagement-reportservice
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5007
+      - ConnectionStrings__ReportDB=Server=sqlserver;Database=ReportDB;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;
+      - ServiceUrls__SubmissionService=http://submissionservice:5035
+      - ServiceUrls__ViolationService=http://violationservice:5005
+    ports:
+      - "5007:5007"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      submissionservice:
+        condition: service_healthy
+      violationservice:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5007/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - exammanagement-network
+    restart: unless-stopped
+
+  # API Gateway
+  apigateway:
+    build:
+      context: .
+      dockerfile: ExamManagement.API/Dockerfile
+    container_name: exammanagement-apigateway
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8000
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=
+      - ASPNETCORE_HTTPS_PORT=
+      - ServiceUrls__AuthService=http://authservice:5001
+      - ServiceUrls__SubjectService=http://subjectservice:5004
+      - ServiceUrls__SemesterService=http://semesterservice:5245
+      - ServiceUrls__ExamService=http://examservice:5145
+      - ServiceUrls__RubricService=http://rubricservice:5078
+      - ServiceUrls__ExaminerService=http://examinerservice:5291
+      - ServiceUrls__SubmissionService=http://submissionservice:5035
+      - ServiceUrls__ViolationService=http://violationservice:5005
+      - ServiceUrls__ReportService=http://reportservice:5007
+    ports:
+      - "8000:8000"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      authservice:
+        condition: service_healthy
+      subjectservice:
+        condition: service_healthy
+      semesterservice:
+        condition: service_healthy
+      examservice:
+        condition: service_healthy
+      rubricservice:
+        condition: service_healthy
+      examinerservice:
+        condition: service_healthy
+      submissionservice:
+        condition: service_healthy
+      violationservice:
+        condition: service_healthy
+      reportservice:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    networks:
+      - exammanagement-network
+    restart: unless-stopped
+
+networks:
+  exammanagement-network:
+    driver: bridge
+
+volumes:
+  sqlserver_data:
+  submissions_uploads:
+
