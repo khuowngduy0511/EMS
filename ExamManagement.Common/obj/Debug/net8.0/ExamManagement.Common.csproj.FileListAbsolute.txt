@@ -1,0 +1,12 @@
+D:\demo\final_PRN232\PRN232-finalAsigment\ExamManagement.Common\obj\Debug\net8.0\ExamManagement.Common.GeneratedMSBuildEditorConfig.editorconfig
+D:\demo\final_PRN232\PRN232-finalAsigment\ExamManagement.Common\obj\Debug\net8.0\ExamManagement.Common.AssemblyInfoInputs.cache
+D:\demo\final_PRN232\PRN232-finalAsigment\ExamManagement.Common\obj\Debug\net8.0\ExamManagement.Common.AssemblyInfo.cs
+D:\demo\final_PRN232\PRN232-finalAsigment\ExamManagement.Common\obj\Debug\net8.0\ExamManagement.Common.csproj.CoreCompileInputs.cache
+D:\demo\final_PRN232\PRN232-finalAsigment\ExamManagement.Common\bin\Debug\net8.0\ExamManagement.Common.deps.json
+D:\demo\final_PRN232\PRN232-finalAsigment\ExamManagement.Common\bin\Debug\net8.0\ExamManagement.Common.dll
+D:\demo\final_PRN232\PRN232-finalAsigment\ExamManagement.Common\bin\Debug\net8.0\ExamManagement.Common.pdb
+D:\demo\final_PRN232\PRN232-finalAsigment\ExamManagement.Common\obj\Debug\net8.0\ExamManagement.Common.dll
+D:\demo\final_PRN232\PRN232-finalAsigment\ExamManagement.Common\obj\Debug\net8.0\refint\ExamManagement.Common.dll
+D:\demo\final_PRN232\PRN232-finalAsigment\ExamManagement.Common\obj\Debug\net8.0\ExamManagement.Common.pdb
+D:\demo\final_PRN232\PRN232-finalAsigment\ExamManagement.Common\obj\Debug\net8.0\ref\ExamManagement.Common.dll
+D:\demo\final_PRN232\PRN232-finalAsigment\ExamManagement.Common\obj\Debug\net8.0\ExamManagement.Common.csproj.AssemblyReference.cache

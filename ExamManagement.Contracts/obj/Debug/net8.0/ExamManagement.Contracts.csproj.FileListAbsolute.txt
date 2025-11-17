@@ -1,0 +1,11 @@
+D:\demo\final_PRN232\PRN232-finalAsigment\ExamManagement.Contracts\bin\Debug\net8.0\ExamManagement.Contracts.deps.json
+D:\demo\final_PRN232\PRN232-finalAsigment\ExamManagement.Contracts\bin\Debug\net8.0\ExamManagement.Contracts.dll
+D:\demo\final_PRN232\PRN232-finalAsigment\ExamManagement.Contracts\bin\Debug\net8.0\ExamManagement.Contracts.pdb
+D:\demo\final_PRN232\PRN232-finalAsigment\ExamManagement.Contracts\obj\Debug\net8.0\ExamManagement.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+D:\demo\final_PRN232\PRN232-finalAsigment\ExamManagement.Contracts\obj\Debug\net8.0\ExamManagement.Contracts.AssemblyInfoInputs.cache
+D:\demo\final_PRN232\PRN232-finalAsigment\ExamManagement.Contracts\obj\Debug\net8.0\ExamManagement.Contracts.AssemblyInfo.cs
+D:\demo\final_PRN232\PRN232-finalAsigment\ExamManagement.Contracts\obj\Debug\net8.0\ExamManagement.Contracts.csproj.CoreCompileInputs.cache
+D:\demo\final_PRN232\PRN232-finalAsigment\ExamManagement.Contracts\obj\Debug\net8.0\ExamManagement.Contracts.dll
+D:\demo\final_PRN232\PRN232-finalAsigment\ExamManagement.Contracts\obj\Debug\net8.0\refint\ExamManagement.Contracts.dll
+D:\demo\final_PRN232\PRN232-finalAsigment\ExamManagement.Contracts\obj\Debug\net8.0\ExamManagement.Contracts.pdb
+D:\demo\final_PRN232\PRN232-finalAsigment\ExamManagement.Contracts\obj\Debug\net8.0\ref\ExamManagement.Contracts.dll
