@@ -1,0 +1,84 @@
+### API Gateway Test File
+### Base URL
+@baseUrl = http://localhost:8000
+@baseUrlHttps = https://localhost:8001
+@token = 
+
+### ============================================
+### 1. AUTH API
+### ============================================
+
+### Login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+### ============================================
+### 2. SUBJECTS API
+### ============================================
+
+### Get All Subjects
+GET {{baseUrl}}/api/subjects
+Accept: application/json
+
+### ============================================
+### 3. SEMESTERS API
+### ============================================
+
+### Get All Semesters
+GET {{baseUrl}}/api/semesters
+Accept: application/json
+
+### ============================================
+### 4. EXAMS API
+### ============================================
+
+### Get All Exams
+GET {{baseUrl}}/api/exams
+Accept: application/json
+
+### ============================================
+### 5. RUBRICS API
+### ============================================
+
+### Get Rubric by Exam ID
+GET {{baseUrl}}/api/rubrics/1
+Accept: application/json
+
+### ============================================
+### 6. EXAMINERS API
+### ============================================
+
+### Get All Examiners
+GET {{baseUrl}}/api/examiners
+Accept: application/json
+
+### ============================================
+### 7. SUBMISSIONS API
+### ============================================
+
+### Get Submission by ID
+GET {{baseUrl}}/api/submissions/1
+Accept: application/json
+
+### ============================================
+### 8. VIOLATIONS API
+### ============================================
+
+### Get Violations by Submission ID
+GET {{baseUrl}}/api/violations/1
+Accept: application/json
+
+### ============================================
+### 9. REPORTS API
+### ============================================
+
+### Get Exam Reports
+GET {{baseUrl}}/api/reports/exam?examId=1
+Accept: application/json
+
+###
